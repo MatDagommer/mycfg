@@ -152,3 +152,4 @@ docs/cli.md
 
 .llamabot/
 data/
+checkpoints/
