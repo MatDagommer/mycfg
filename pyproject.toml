@@ -81,7 +81,7 @@ dependencies = [
     "typer",
     "loguru",
     "marimo"
-]
+, "mnist"]
 readme = "README.md"
 
 [project.scripts]
@@ -110,6 +110,7 @@ typer = ">=0.21.0,<0.22"
 loguru = ">=0.7.3,<0.8"
 cookiecutter = ">=2.6.0,<3"
 sh = ">=2.2.2,<3"
+mnist = "*"
 
 # NOTE: Testing dependencies (not needed for running program) go here.
 [tool.pixi.feature.tests.dependencies]
