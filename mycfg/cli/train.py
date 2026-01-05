@@ -6,18 +6,20 @@ import torchvision
 import torchvision.transforms as transforms
 import typer
 from loguru import logger
+from pyprojroot import here
 
 from ..models.cnn import FashionMNISTCNN
 
+app = typer.Typer(help="Train a CNN model on the Fashion-MNIST dataset.")
 
-@typer.command()
+@app.command()
 def train_model(
     epochs: int = typer.Option(10, help="Number of training epochs"),
     batch_size: int = typer.Option(64, help="Batch size for training"),
     learning_rate: float = typer.Option(0.001, help="Learning rate"),
     data_dir: str = typer.Option("./data", help="Directory to store/load Fashion-MNIST data"),
     save_model: bool = typer.Option(True, help="Save trained model"),
-    model_path: str = typer.Option("fashion_mnist_cnn.pth", help="Path to save the model"),
+    model_path: str = typer.Option("checkpoints/fashion_mnist_cnn.pth", help="Path to save the model"),
     download: bool = typer.Option(False, help="Download the dataset if not present")
 ):
     """Train a CNN model on Fashion-MNIST dataset."""
@@ -95,8 +97,8 @@ def train_model(
         logger.info(f'Epoch {epoch+1}/{epochs} - Train Loss: {epoch_loss:.4f}, Train Acc: {epoch_acc:.2f}%, Test Acc: {test_acc:.2f}%')
     
     if save_model:
-        torch.save(model.state_dict(), model_path)
-        logger.info(f"Model saved to {model_path}")
+        torch.save(model.state_dict(), str(here() / model_path))
+        logger.info(f"Model saved to {str(here() / model_path)}")
     
     logger.info("Training completed!")
 
