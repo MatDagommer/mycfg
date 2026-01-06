@@ -136,8 +136,8 @@ def auto_config_cli(config_class: Type[T]):
                 # Make it Optional
                 param_type = Optional[field_type]
             
-            # Create help text from field name
-            help_text = f"{field.name.replace('_', ' ').title()}"
+            # Extract help text from field metadata, fallback to formatted field name
+            help_text = field.metadata.get("help", f"{field.name.replace('_', ' ').title()}")
             
             # Create the parameter with typer.Option
             param = inspect.Parameter(
