@@ -2,6 +2,7 @@
 
 from typer import Typer
 from .train import train_model
+from .test_config import test_config
 
 from ..version import __version__
 
@@ -12,6 +13,7 @@ app = Typer(
 )
 
 app.command("train")(train_model)
+app.command("test-config")(test_config)
 
 @app.command()
 def version():
