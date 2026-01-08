@@ -1,3 +1,5 @@
+"""Test configuration loading and merging for training a CNN on Fashion-MNIST."""
+
 from pathlib import Path
 from typing import Optional
 
@@ -17,8 +19,10 @@ app = typer.Typer(help="Train a CNN model on the Fashion-MNIST dataset.")
 @app.command()
 @auto_config_cli(TrainingConfig)
 def test_config(
-    config_path: Optional[str] = typer.Option(None, "--config", "-c", help="Path to configuration YAML file"),
-    save_config: Optional[str] = typer.Option(None, help="Path to save the final configuration")
+    config_path: Optional[str] = typer.Option(None, "--config", "-c", \
+        help="Path to configuration YAML file"),
+    save_config: Optional[str] = typer.Option(None, \
+        help="Path to save the final configuration")
 ):
     """Train a CNN model on Fashion-MNIST dataset."""
 
@@ -45,7 +49,8 @@ def test_config(
 
     logger.info(f"Configuration loaded: {config}")
 
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("mps" if torch.backends.mps.is_available() \
+        else "cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
 
 if __name__ == "__main__":

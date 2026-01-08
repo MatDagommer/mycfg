@@ -1,3 +1,5 @@
+"""Utility functions for configuration management with CLI overrides."""
+
 import inspect
 import threading
 from dataclasses import fields, is_dataclass
@@ -21,7 +23,8 @@ def load_config_with_overrides(
     save_path: Optional[Path] = None
 ) -> T:
     """
-    Load configuration from YAML file, apply CLI overrides, and return structured config.
+    Load configuration from YAML file, apply CLI overrides,
+    and return structured config.
 
     Args:
         config_class: Dataclass type to structure the configuration
@@ -42,13 +45,15 @@ def load_config_with_overrides(
     structured_config = OmegaConf.structured(config_class)
     print(structured_config)
 
-    # Merge base config with structured config (structured takes precedence for defaults)
+    # Merge base config with structured config
+    # (structured takes precedence for defaults)
     merged_config = OmegaConf.merge(structured_config, base_config)
 
     # Apply CLI overrides if provided
     if overrides:
         # Filter out None values from overrides
-        filtered_overrides = {k: v for k, v in overrides.items() if v is not None}
+        filtered_overrides = {k: v for k, v in overrides.items() \
+                               if v is not None}
         if filtered_overrides:
             override_config = OmegaConf.create(filtered_overrides)
             merged_config = OmegaConf.merge(merged_config, override_config)
@@ -117,6 +122,7 @@ def auto_config_cli(config_class: Type[T]):
         Decorated function with dynamically added CLI arguments
     """
     def decorator(func):
+        """Decorator to add CLI arguments based on dataclass fields."""
         if not is_dataclass(config_class):
             raise ValueError("config_class must be a dataclass")
 
@@ -138,7 +144,8 @@ def auto_config_cli(config_class: Type[T]):
                 param_type = Optional[field_type]
 
             # Extract help text from field metadata, fallback to formatted field name
-            help_text = field.metadata.get("help", f"{field.name.replace('_', ' ').title()}")
+            help_text = field.metadata.get("help", \
+                f"{field.name.replace('_', ' ').title()}")
 
             # Create the parameter with typer.Option
             param = inspect.Parameter(
@@ -154,9 +161,14 @@ def auto_config_cli(config_class: Type[T]):
 
         @wraps(func)
         def wrapper(*args, **kwargs):
+            """
+            Wrapper function to extract config overrides and
+            call the original function.
+            """
             # Extract config field values from kwargs
             config_field_names = {field.name for field in fields(config_class)}
-            config_overrides = {k: v for k, v in kwargs.items() if k in config_field_names and v is not None}
+            config_overrides = {k: v for k, v in kwargs.items() \
+                if k in config_field_names and v is not None}
 
             # Separate original function params from config params
             sig_params = list(sig.parameters.keys())

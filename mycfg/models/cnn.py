@@ -1,9 +1,21 @@
+"""CNN model definition for Fashion-MNIST classification."""
+
 import torch.nn as nn
 import torch.nn.functional as F
 
 
 class FashionMNISTCNN(nn.Module):
+    """
+    Convolutional Neural Network for Fashion-MNIST classification.
+
+    Args:
+        num_classes (int): Number of output classes. Default is 10.
+
+    Returns:
+        nn.Module: CNN model instance.
+    """
     def __init__(self, num_classes=10):
+        """Initialize the CNN model."""
         super(FashionMNISTCNN, self).__init__()
 
         self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)
@@ -18,6 +30,7 @@ class FashionMNISTCNN(nn.Module):
         self.fc3 = nn.Linear(128, num_classes)
 
     def forward(self, x):
+        """Forward pass of the CNN model."""
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = self.pool(F.relu(self.conv3(x)))
