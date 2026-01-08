@@ -1,4 +1,11 @@
 from dataclasses import dataclass, field
+from typing import List, Dict
+
+@dataclass
+class LayerConfig:
+    """Configuration for a single layer."""
+    size: int = field(metadata={"help": "Number of neurons in the layer"})
+    dim: int = field(metadata={"help": "Dimension of the layer"})
 
 @dataclass
 class TrainingConfig:
@@ -10,6 +17,10 @@ class TrainingConfig:
     save_model: bool = field(default=True, metadata={"help": "Whether to save the trained model"})
     model_path: str = field(default="checkpoints/fashion_mnist_cnn.pth", metadata={"help": "Path to save/load the trained model"})
     download: bool = field(default=False, metadata={"help": "Whether to download the dataset if not present"})
+    layers: Dict[str, LayerConfig] = field(default_factory=lambda: {
+        "layer_1": LayerConfig(size=128, dim=784),
+        "layer_2": LayerConfig(size=64, dim=128)
+    }, metadata={"help": "Dictionary of layer configurations"})
     
     def __post_init__(self):
         """Validate configuration after initialization."""
