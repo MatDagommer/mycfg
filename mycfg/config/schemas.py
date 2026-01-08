@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from typing import List, Dict
+from typing import Dict
+
 
 @dataclass
 class LayerConfig:
@@ -21,7 +22,7 @@ class TrainingConfig:
         "layer_1": LayerConfig(size=128, dim=784),
         "layer_2": LayerConfig(size=64, dim=128)
     }, metadata={"help": "Dictionary of layer configurations"})
-    
+
     def __post_init__(self):
         """Validate configuration after initialization."""
         if self.epochs <= 0:

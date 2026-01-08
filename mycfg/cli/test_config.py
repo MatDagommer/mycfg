@@ -1,18 +1,16 @@
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader
-import torchvision
-import torchvision.transforms as transforms
-import typer
-from loguru import logger
-from pyprojroot import here
 from pathlib import Path
 from typing import Optional
 
-from ..models.cnn import FashionMNISTCNN
+import torch
+import typer
+from loguru import logger
+
 from ..config.schemas import TrainingConfig
-from ..config.utils import load_config_with_overrides, auto_config_cli, get_current_config_overrides
+from ..config.utils import (
+    auto_config_cli,
+    get_current_config_overrides,
+    load_config_with_overrides,
+)
 
 app = typer.Typer(help="Train a CNN model on the Fashion-MNIST dataset.")
 
@@ -23,16 +21,16 @@ def test_config(
     save_config: Optional[str] = typer.Option(None, help="Path to save the final configuration")
 ):
     """Train a CNN model on Fashion-MNIST dataset."""
-    
+
     # Determine config file path
     if config_path:
         config_file = Path(config_path)
     else:
         config_file = None
-    
+
     # Use overrides from the decorator
     overrides = get_current_config_overrides()
-    
+
     # Load and merge configuration
     save_config_path = Path(save_config) if save_config else None
     config = load_config_with_overrides(
@@ -44,9 +42,9 @@ def test_config(
 
     print("Final Merged Configuration:")
     print(config)
-    
+
     logger.info(f"Configuration loaded: {config}")
-    
+
     device = torch.device("mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
 

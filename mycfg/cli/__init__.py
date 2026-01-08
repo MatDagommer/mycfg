@@ -1,10 +1,10 @@
 """Initialize the CLI module."""
 
 from typer import Typer
-from .train import train_model
-from .test_config import test_config
 
 from ..version import __version__
+from .test_config import test_config
+from .train import train_model
 
 app = Typer(
     help="Command-line interface for mycfg.",
