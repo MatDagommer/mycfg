@@ -1,6 +1,6 @@
 # mycfg
 
-Manage My Configuration (MyCfg): Exploring ways to manage configurations in ML projects.
+Manage My Configuration (MyCfg): Exploring ways to manage configurations in ML projects with Typer and OmegaConf. 
 
 Made with ❤️ by Matthieu Dagommer (@MatDagommer).
 
