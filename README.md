@@ -4,7 +4,7 @@ Manage My Configuration (MyCfg): Exploring ways to manage configurations in ML p
 
 Made with ❤️ by Matthieu Dagommer (@MatDagommer).
 
-## Get started for development
+## For developers
 
 To get started:
 
