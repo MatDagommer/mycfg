@@ -112,6 +112,7 @@ mycfg = { path = ".", editable = true }
 [tool.pixi.dependencies]
 cookiecutter = ">=2.6.0,<3"
 sh = ">=2.2.2,<3"
+lightning = ">=2.6.0,<3"
 
 # NOTE: Testing dependencies (not needed for running program) go here.
 [tool.pixi.feature.tests.dependencies]
